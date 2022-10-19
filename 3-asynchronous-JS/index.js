@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { promises } = require('stream');
 const superagent = require('superagent');
 
 // CALLBACK HELL
@@ -43,7 +44,39 @@ const writeFilePro = (file, data) => {
   });
 };
 
+// Waiting for multiple promises simulteanously
+const getDogPic = async () => {
+  try {
+    const data = await readFilePro(path.join(__dirname, '/dog.txt'));
+    console.log(`Breed: ${data}`);
+
+    const res1 = superagent.get(
+      `https://dog.ceo/api/breed/${data}/images/random`
+    );
+
+    const res2 = superagent.get(
+      `https://dog.ceo/api/breed/${data}/images/random`
+    );
+
+    const res3 = superagent.get(
+      `https://dog.ceo/api/breed/${data}/images/random`
+    );
+
+    const all = await Promise.all([res1, res2, res3]);
+    const imgs = all.map(cur => cur.body.message);
+    console.log(imgs);
+
+    await writeFilePro('dog-img.txt', imgs.join('\n'));
+    console.log("Random dog's img saved to file 😉");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+getDogPic();
+
 // Consume Promises: async/await
+/*
 const getDogPic = async () => {
   try {
     const data = await readFilePro(path.join(__dirname, '/dog.txt'));
@@ -64,7 +97,7 @@ const getDogPic = async () => {
   return `2: READY!!! 🔥`;
 };
 
-// Returning value of asyn/ await function
+// Returning value of asyn/ await function 
 (async () => {
   try {
     console.log("1: will get dog's pics");
@@ -76,6 +109,7 @@ const getDogPic = async () => {
   }
 })();
 
+// Returning value of then/ catch function
 /*
 console.log("1: will get dog's pics");
 getDogPic()
