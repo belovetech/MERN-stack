@@ -58,10 +58,35 @@ const getDogPic = async () => {
     console.log("Random dog's img saved to file 😉");
   } catch (err) {
     console.log(err);
+
+    throw err;
   }
+  return `2: READY!!! 🔥`;
 };
 
-getDogPic();
+// Returning value of asyn/ await function
+(async () => {
+  try {
+    console.log("1: will get dog's pics");
+    const x = await getDogPic();
+    console.log(x);
+    console.log("3: Done getting dog's pics");
+  } catch (err) {
+    console.log('ERROR!!!');
+  }
+})();
+
+/*
+console.log("1: will get dog's pics");
+getDogPic()
+  .then(x => {
+    console.log(x);
+    console.log("3: Done getting dog's pics");
+  })
+  .catch(err => {
+    console.log(err);
+  });
+*/
 
 /*
 // Consume Promises: then/catch
