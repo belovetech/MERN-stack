@@ -91,6 +91,29 @@ app.patch('/api/v1/tours/:id', (req, res) => {
   });
 });
 
+// DELETE endpoint
+app.delete('/api/v1/tours/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = tours.findIndex(cur => cur.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+
+  tours.splice(index, 1);
+
+  fs.writeFile(dirname, JSON.stringify(tours), err => {
+    if (err) return console.log(err);
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    });
+  });
+});
+
 // setting up server
 const port = 3000;
 app.listen(port, () => {
