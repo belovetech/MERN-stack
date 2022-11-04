@@ -18,4 +18,12 @@ exports.getAllUsers = (req, res) => {
 
 exports.createUser = (req, res) => {
   const user = req.body;
+  Object.assign();
+
+  res.status(201).json({
+    status: success,
+    data: {
+      user,
+    },
+  });
 };
