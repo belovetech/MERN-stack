@@ -4,18 +4,16 @@ const Tour = require("../models/tourModel");
 exports.getAllTours = async (req, res) => {
   try {
     // BUILD QUERY
+    // SIMPLE FILTERING
     const queryObj = { ...req.query };
     const excludedFields = ["page", "sort", "limit", "fields"];
     excludedFields.forEach((el) => delete queryObj[el]);
 
-    const query = Tour.find(queryObj);
+    // ADVANCED FILTERING
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
 
-    // const query =  Tour.find({ difficulty: "easy", duration: "5" });
-    // const query =  Tour.find()
-    //   .where("difficulty")
-    //   .equals("easy")
-    //   .where("duration")
-    //   .equals(5);
+    const query = Tour.find(JSON.parse(queryStr));
 
     // EXECUTE QUERY
     const tours = await query;
@@ -34,6 +32,12 @@ exports.getAllTours = async (req, res) => {
       message: "Resources Not Found",
     });
   }
+  // const query =  Tour.find({ difficulty: "easy", duration: "5" });
+  // const query =  Tour.find()
+  //   .where("difficulty")
+  //   .equals("easy")
+  //   .where("duration")
+  //   .equals(5);
 };
 
 exports.getTour = async (req, res) => {
