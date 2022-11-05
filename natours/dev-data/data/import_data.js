@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 const fs = require("fs");
 
 const Tour = require("../../models/tourModel");
