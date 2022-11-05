@@ -67,7 +67,6 @@ class APIfeatures {
 exports.getAllTours = async (req, res) => {
   try {
     // BUILD QUERY
-    // SIMPLE FILTERING
     const features = new APIfeatures(Tour.find(), req.query)
       .filter()
       .sort()
