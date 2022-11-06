@@ -1,3 +1,4 @@
+const { validate } = require("../models/tourModel");
 const Tour = require("../models/tourModel");
 const APIfeatures = require("./../utils/apiFeatures");
 
@@ -69,7 +70,7 @@ exports.createTour = async (req, res) => {
   } catch (err) {
     res.status(400).json({
       status: "fail",
-      message: "Invalid data sent!",
+      message: err,
     });
   }
 };
