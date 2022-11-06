@@ -36,7 +36,7 @@ app.all("*", (req, res, next) => {
   // const err = new Error(`Can't find ${req.originalUrl} on this server`);
   // err.status = "fail";
   // err.statusCode = 400;
-  next(new AppError(`Can't find ${req.originalUrl} on this server`), 400);
+  next(new AppError(`Can't find ${req.originalUrl} on this server`, 400));
 });
 
 // ERROR MIDDLEWARE
