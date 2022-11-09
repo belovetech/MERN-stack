@@ -1,14 +1,14 @@
-#!/usr/bin/node
+// const fs = require("fs");
+const User = require("./../models/userModel");
 
-const fs = require('fs');
-
-const filepath = `${__dirname}/../dev-data/data/users.json`;
-const users = JSON.parse(fs.readFileSync(filepath));
+// const filepath = `${__dirname}/../dev-data/data/users.json`;
+// const users = JSON.parse(fs.readFileSync(filepath));
 
 // Router handler
 exports.getAllUsers = (req, res) => {
+  const users = User.find();
   res.status(200).json({
-    status: 'success',
+    status: "success",
     results: users.length,
     data: {
       users,
@@ -18,7 +18,7 @@ exports.getAllUsers = (req, res) => {
 
 exports.createUser = (req, res) => {
   const user = req.body;
-  Object.assign();
+  // Object.assign();
 
   res.status(201).json({
     status: success,

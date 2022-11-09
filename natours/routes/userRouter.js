@@ -1,13 +1,14 @@
-#!/usr/bin/node
-
-const express = require('express');
-const userController = require('./../controllers/userController');
+const express = require("express");
+const userController = require("./../controllers/userController");
+const authController = require("./../controllers/authController");
 // const { getAllUsers, createUser } = require('./../controllers/userController');
 
 const router = express.Router();
 
+router.post("/signup", authController.signUp);
+
 router
-  .route('/')
+  .route("/")
   .get(userController.getAllUsers)
   .post(userController.createUser);
 
